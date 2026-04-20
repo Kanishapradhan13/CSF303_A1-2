@@ -22,8 +22,8 @@ for (auto& [u, v, w] : edges)
     cin >> u >> v >> w;
 ```
 - Stores all edges as `(from, to, weight)` tuples in a flat list.
-- Uses **structured bindings** (`auto& [u, v, w]`) — C++17 feature that unpacks the tuple cleanly.
-- A flat edge list is the right choice here because Bellman-Ford needs to scan *all* edges every pass — an adjacency list gives no benefit.
+- Uses **structured bindings** (`auto& [u, v, w]`) - C++17 feature that unpacks the tuple cleanly.
+- A flat edge list is the right choice here because Bellman-Ford needs to scan *all* edges every pass - an adjacency list gives no benefit.
 
 ### Distance Initialization
 ```cpp
@@ -31,7 +31,7 @@ vector<long long> dist(V, LLONG_MAX / 2);
 dist[src] = 0;
 ```
 - `LLONG_MAX / 2` is used instead of `LLONG_MAX` to avoid overflow.
-- If you use `LLONG_MAX` and do `dist[u] + w`, the addition wraps around to a negative number — an unreachable vertex would incorrectly appear reachable.
+- If you use `LLONG_MAX` and do `dist[u] + w`, the addition wraps around to a negative number - an unreachable vertex would incorrectly appear reachable.
 - Dividing by 2 gives a safe "infinity" that survives addition.
 
 ### Core Relaxation Loop
@@ -95,9 +95,3 @@ Source: 0
 
 ---
 
-## 6. Key Takeaways
-
-- Bellman-Ford trades speed (O(VE) vs Dijkstra's O(E log V)) for the ability to handle negative weights.
-- The algorithm is correct because any shortest path uses at most V-1 edges, so V-1 passes are sufficient.
-- The extra V-th pass for cycle detection costs O(E) and is the most elegant part of the algorithm.
-- Always use `LLONG_MAX / 2` (not `LLONG_MAX`) to avoid overflow when adding weights to the distance.
